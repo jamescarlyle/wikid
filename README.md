@@ -45,29 +45,6 @@ The page can also be loaded via IPFS itself (note that the hash will change):
 https://ipfs.io/ipfs/QmYUxBeZfL1BQc8zdqudfAEt61ntouccNKmaNhz95Drfw7/#!/home#start
 ```
 
-But then if the local daemon is specified, the following error will be seen
-```
-Mixed Content: The page at 'https://ipfs.io/ipfs/QmYUxBeZfL1BQc8zdqudfAEt61ntouccNKmaNhz95Drfw7/#!/home#start' was loaded over HTTPS, but requested an insecure XMLHttpRequest endpoint 'http://localhost:5001/api/v0/object/put/'. This request has been blocked; the content must be served over HTTPS.
-```
-There is a current dependency on the IPFS daemon which provides the ability to fetch and save Wiki content through the IPFS API. The Wiki app is preconfigured to talk to the API on localhost port 5001 (this is the default port for the IPFS API), in order to both fetch content and save changes. Browsers require that if an IPFS gateway is used to serve the Javascript, it needs to use the same protocol as the API, i.e. http rather than https.
-
-If you want to run the daemon and allow it to be writable by users of the Wiki who are not using the same host and port to serve the html and Javascript, then CORS must be configured on the IPFS daemon, so that the API will allow requests from Javascript hosted on other origins. See [Wikipedia on CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) for more. So if you serve the HTML and Javascript using the local IPFS daemon, thus:
-```
-http://localhost:8080/ipfs/QmYUxBeZfL1BQc8zdqudfAEt61ntouccNKmaNhz95Drfw7/
-```
-
-then you will see the following error
-```
-XMLHttpRequest cannot load http://localhost:5001/api/v0/object/put/. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:8080' is therefore not allowed access. The response had HTTP status code 403.
-```
-
-This can be corrected with the following configuration:
-```
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
-```
-
 The Wiki works by managing a "context" or "umbrella" for all the Wiki pages that link directly to each other. Behind the scenes, this is an IPFS Object with an array of Links mapping WikiNames to hashes.  The Wiki pages themselves are IPFS Objects with Data but no Links.
 
 Technically speaking, when rendering a page, the context is loaded first, so that the hash of the page can be looked up, and then requested. When saving a page, the page is saved first,
@@ -94,30 +71,13 @@ For an individual page, the Object stores the following
 ```
 
 
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
-
----
-
-# svelte app
-
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
-
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
-
 
 ## Get started
 
 Install the dependencies...
 
 ```bash
-cd svelte-app
+cd wikid
 npm install
 ```
 
