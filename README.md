@@ -43,9 +43,9 @@ http://localhost/index.html or file:///path/to/public/index.html
 
 ## Technical Details
 
-The page can also be loaded via IPFS itself (note that the hash will change):
+The page can also be loaded via IPFS itself (note that the hash will change), using a gateway such as:
 ```
-https://ipfs.io/ipfs/QmYUxBeZfL1BQc8zdqudfAEt61ntouccNKmaNhz95Drfw7/
+https://ipfs.io/ipfs/Qmcj6x5wvGd6uCEF9GA2C5PwcviS5NayrH31b8UaTwZFGj/index.html
 ```
 
 The Wiki works by managing a "context" or "umbrella" for all the Wiki pages that link directly to each other. Behind the scenes, this is an IPFS Object with an array of Links mapping WikiNames to hashes.  The Wiki pages themselves are IPFS Objects with Data but no Links.
