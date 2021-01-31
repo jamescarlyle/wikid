@@ -122,20 +122,17 @@ A new paragraph containing a WikiNameLink and a [custom link](https://some.link)
 
     // Render reactively when Preview is selected.
     $: {
-        if ((workflow == 'display' || workflow == 'preview') && markdownContent) {
+        if (['display','preview','practice'].includes(workflow) && markdownContent) {
             transformedContent = render(markdownContent);
         }
     }
 </script>
 
-{#if workflow == 'edit'}
+{#if ['edit','practice'].includes(workflow)}
     <h3>Editor</h3>
     <textarea cols="100" bind:value="{markdownContent}" rows="10" style="width:100%;"></textarea>
-{:else}
-    {#if workflow == 'preview'}
-        <h3>Preview</h3>
-    {:else}
-        <h3>Content</h3>
-    {/if}
+{/if}
+{#if ['display','preview','practice'].includes(workflow)}
+    <h3>{'display' == workflow ? 'Content' : 'Preview'}</h3>
     <blockquote bind:innerHTML={transformedContent} contenteditable="false"></blockquote>
 {/if}

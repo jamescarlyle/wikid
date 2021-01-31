@@ -59,10 +59,8 @@ email@address.com links
 	</code>
 </pre>
 <p>More complete markdown syntax support will be added in future.</p>
-<p>
-	Practice editing Wiki text using the sandbox:
-</p>
-<Editor isEditing={true}/>
+<p><b>Practice editing Wiki text using the sandbox:</b></p>
+<Editor workflow="practice"/>
 <h2>Let's get started</h2>
 <p>The first step is to select a name for your Wiki and the first page.</p>
 <form on:submit={save}>
