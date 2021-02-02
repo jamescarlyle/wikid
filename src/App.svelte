@@ -7,6 +7,8 @@
 	let ipfsNode;
 	let context;
 	let page;
+	let passphrase;
+	let viewPassphrase;
 
 	const intialiseNode = async () => {
 		ipfsNode = await Ipfs.create();
@@ -31,6 +33,7 @@
 		}
 	};
 
+	$: document.getElementsByName('passphrase').forEach(element => (viewPassphrase? element.type = 'text': element.type = 'password'));
 </script>
 
 <svelte:head>
@@ -45,14 +48,15 @@
 		The distributed, interplanetary Wiki.
 		<a href="#">Start &#x23f5;</a>
 		{#if (context)}
-			<a href="#context/{context}">Pages &#x1f5d0;</a>
+			| <a href="#context/{context}">Pages &#x1f5d0;</a>
 		{/if}
-		<!-- <li><a href="/">Configure &#x26ED;</a></li> -->
+		| <input type="password" bind:value={passphrase} name="passphrase" placeholder="Passphrase (optional)"/> 
+		show <input type="checkbox" bind:checked={viewPassphrase}/>
 	</nav>
 </header>
 
 <main>
-	<svelte:component this={component} ipfsNode={ipfsNode} contextCID={context} pageName={page}/>
+	<svelte:component this={component} ipfsNode={ipfsNode} contextCID={context} pageName={page} bind:passphrase={passphrase} bind:viewPassphrase={viewPassphrase}/>
 </main>
 
 <footer>

@@ -2,6 +2,8 @@
 	import Editor from "./Editor.svelte";
 	// Define standard exports for parameterisation.
 	export let ipfsNode;
+	export let passphrase;
+	export let viewPassphrase;
 	let contextName = '';
 
 	async function save(event) {
@@ -62,7 +64,7 @@ email@address.com links
 <p><b>Practice editing Wiki text using the sandbox:</b></p>
 <Editor workflow="practice"/>
 <h2>Let's get started</h2>
-<p>The first step is to select a name for your Wiki and the first page.</p>
+<p>The first step is to select a name for your Wiki and a passphrase if you wish to protect the page content.</p>
 <form on:submit={save}>
 	<fieldset>
 		<legend>Wiki Name</legend>
@@ -73,6 +75,12 @@ email@address.com links
 		pattern="(?:[A-Z][a-z]+)&lbrace;2,&rbrace;"
 		title="A Wiki name is required, 2 or more words joined by capitals, e.g. MyWiki."
 		placeholder="The name of your Wiki, 2 or more words joined by capitals, e.g. MyWiki."/>
-		</fieldset>
+	</fieldset>
+	<fieldset>
+		<legend>Passphrase (optional)</legend>
+		<input type="password" bind:value={passphrase} name="passphrase"/>
+		show <input type="checkbox" bind:checked={viewPassphrase}/>
+		<p>If a passphrase is set, all pages' content will be encrypted using the passphrase, <em>and will only be readable if the same passphrase is entered later</em>.</p>
+	</fieldset>
 	<button type="submit">Start &#x23f5;</button>
 </form>

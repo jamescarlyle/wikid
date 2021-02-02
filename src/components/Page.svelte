@@ -1,9 +1,11 @@
 <script>
 	import Editor from './Editor.svelte';
+	import {encryptString, decryptString} from '../crypto.js';
 	// Define standard exports for parameterisation.
 	export let ipfsNode;
     export let contextCID;
-    export let pageName;
+	export let pageName;
+	export let passphrase;
 	let contextObj;
 	let pageLink;
 	let pageObj;
@@ -20,7 +22,8 @@
 			// Fetch the page.
 			pageObj = await ipfsNode.object.get(pageLink.Hash);
 			// Pull out the markdown content.
-			markdownContent = await pageObj.Data;
+			const encryptedContent = await pageObj.Data;
+			markdownContent = await decryptString(encryptedContent, passphrase);
 		} else {
 			// Create a new page.
 			pageObj = { Data: '', Links: []};
@@ -38,15 +41,9 @@
 			})
 		}
 
-		// const pageToSave = {
-		// 	Data: markdownContent,
-		// 	Links: pageObj.Links.concat([{
-		// 		Name: new Date().toUTCString(),
-		// 		Hash: contextCID
-		// 	}])
-		// };
 		// Save the new page.
-		const addedPageCID = await ipfsNode.object.put({Data: markdownContent, Links: pageObj.Links});
+		const encryptedContent = await encryptString(markdownContent, passphrase);
+		const addedPageCID = await ipfsNode.object.put({Data: encryptedContent, Links: pageObj.Links});
 		// Now update context with added version.
 		// Look up the original position of the page in the context
 		const linkPosition = contextObj.Links.findIndex(link => link.Name == pageName);
@@ -65,6 +62,7 @@
 
 	// We need to signal to Svelte that the page should be retrieved whenever the contextCID or pageName changes.
 	$: {retrievePage(contextCID, pageName)};
+
 </script>
 
 <!-- Single page. -->
