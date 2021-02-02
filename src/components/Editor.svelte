@@ -1,9 +1,5 @@
 <script>
     "use strict";
-
-import { } from "os";
-import { bind } from "svelte/internal";
-
     export let markdownContent = `# Sample main heading
 Some text.
 Some more text, on a new line. **TRY CHANGING ME**
