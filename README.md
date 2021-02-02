@@ -5,7 +5,7 @@ This is a minimum viable web application to explore the read/write web on [IPFS]
 
 The product is a Wiki that has no central server. All of the Wiki content is held on IPFS itself, and the Wiki html + Javascript files can also be held and served from IPFS via an IPFS gateway, or served to the browser from a local filesystem or local webserver.
 
-This version of the application runs an IPFS node in the browser itself - the [previous version](https://github.com/jamescarlyle/ipfs-wiki) additionally required access to an IPFS daemon, either locally or remotely.
+This version of the application runs an IPFS node in the browser itself - the [previous version](https://github.com/jamescarlyle/ipfs-wiki) additionally required access to an IPFS daemon, either locally or remotely. Pages can be symmetrically-encrypted using AES if saved with a passphrase, which **must be reentered later** in order to be able to read the page. In other words, if the passphrase is lost, the pages saved with it will be unreadable. This implementation is likely to be secure but is very basic.
 
 The Wiki supports a subset of markdown syntax: specifically the following
 
