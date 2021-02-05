@@ -78,7 +78,8 @@ email@address.com links
 	</fieldset>
 	<fieldset>
 		<legend>Passphrase (optional)</legend>
-		<input type="password" bind:value={passphrase} name="passphrase"/>
+		<input type="password" size="40" bind:value={passphrase} name="passphrase"
+		placeholder="Choose a passphrase to protect the content of all pages."/> 
 		show <input type="checkbox" bind:checked={viewPassphrase}/>
 		<p>If a passphrase is set, all pages' content will be encrypted using the passphrase, <em>and will only be readable if the same passphrase is entered later</em>.</p>
 	</fieldset>

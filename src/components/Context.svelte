@@ -6,6 +6,7 @@
 	let contextObj;
 
 	const retrieveContext = async () =>  contextObj = await ipfsNode.object.get(contextCID);
+
 	const newPage = (event) => {
 		// Start by terminating the form submission, which is needed to perform input validation.
 		event.preventDefault();
@@ -17,9 +18,11 @@
 	$: { retrieveContext(contextCID); };
 </script>
 
+<svelte:head><title>WIKID: {contextObj? contextObj.Data: "loading"}</title></svelte:head>
+
 <!-- list of pages in context -->
 {#if contextObj}
-	<h1>&#x1f5d0; Wiki: {contextObj.Data}</h1>
+	<h1 id="contextName" contextname="{contextObj.Data}">&#x1f5d0; Wiki: {contextObj.Data}</h1>
 {/if}
 <p><small>Wiki IPFS ID: <b>{[...contextCID].map((d, i)=>(i)%4==0?' '+d:d).join('')}</b></small></p>
 <h2>Pages:</h2>
